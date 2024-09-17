@@ -1,6 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
 <h1>Sayur Shop</h1>
 
 <h5>Name: </h5>
-<p>{{ name }}</p> <!-- Ubah sesuai dengan nama kamu -->
+<p>{{ name }}</p>
 <h5>Class: </h5>
-<p>{{ class }}</p> <!-- Ubah sesuai dengan kelas kamu -->
+<p>{{ class }}</p>
+
+{% if not product_entries %}
+<p>Belum ada data product pada sayur shop.</p>
+{% else %}
+<table>
+  <tr>
+    <th>Product Name</th>
+    <th>Price</th>
+    <th>Description</th>
+    <th>Stock</th>
+    <th>Rating</th>
+  </tr>
+
+
+  {% for Product in product_entries %}
+  <tr>
+    <td>{{Product.name}}</td>
+    <td>{{Product.price}}</td>
+    <td>{{Product.description}}</td>
+    <td>{{Product.stock}}</td>
+    <td>{{Product.rating}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<br />
+
+<a href="{% url 'main:create_product_entry' %}">
+  <button>Add New Product Entry</button>
+</a>
+{% endblock content %}
