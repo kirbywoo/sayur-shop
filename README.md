@@ -208,7 +208,8 @@ Link PWS : https://eva-yunia-sayurshop.pbp.cs.ui.ac.id
   - Pada Django memungkinkan pengembang untuk bekerja dengan database tanpa harus menulis SQL.
   - Setiap tabel di database direpresentasikan sebagai kelas model. Tiap kolom pada tabel menunjukkan atribut kelas dan tiap baris merepresentasikan objek dari kelas tersebut.
 
-# Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
+# TUGAS 3
+## Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
 - Integrasi Data.
   - *Data delivery* memungkinkan integrasi data dari berbagai sumber ke dalam satu platform. Hal ini berguna untuk memastikan semua data yang diperlukan tersedia dan dapat diakses dengan mudah.
 - Efisiensi Performa.
@@ -218,10 +219,10 @@ Link PWS : https://eva-yunia-sayurshop.pbp.cs.ui.ac.id
 - Pengalaman Pengguna.
   - Jika *data delivery* yang digunakan efisien, maka hal ini akan meningkatkan pengalaman pengguna dengan memberikan respons yang cepat dan meminimalkan waktu tunggu.
  
-# Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+## Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
 Lebih baik atau tidaknya antara XML dan JSON tergantung pada kebutuhan. Untuk pengembangan aplikasi web modern dan komunikasi API, JSON lebih baik karena sifatnya yang ringan, sederhana, dan kemudahan dalam integrasi dengan JavaScript. 
 Namun, jika proyek memerlukan struktur data yang lebih kompleks, dukungan validasi skema, atau penggunaan atribut dalam elemen data, XML bisa menjadi pilihan yang lebih tepat. XML lebih kompatibel dengan sistem lama dan unggul dalam menangani markup dokumen.
-## JSON lebih populer dibandungkan dengan XML karena beberapa alasan yaitu:
+### JSON lebih populer dibandungkan dengan XML karena beberapa alasan yaitu:
 #### Sintaks yang lebih ringkas dan sederhana
 Menggunakan sintaks yang lebih sederhana dengan pasangan key-value. Ini membuat JSON lebih mudah dibaca dan ditulis, baik oleh manusia maupun oleh mesin. Contoh sintaks JSON:
     ```
@@ -241,15 +242,15 @@ JSON mendukung tipe data dasar seperti string, angka, array, dan objek, serta le
 #### Ukuran Data
 JSON lebih hemat ruang karena tidak memiliki tag pembuka dan penutup yang rumit seperti XML. Ini membuat data dalam JSON lebih kecil dan lebih cepat ditransfer.
 
-# Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
-Method is_valid() digunakan untuk memvalidasi isi input dari form tersebut. Jika form valid, maka akan mengembalikan True, lalu data akan disimpan ke dalam database menggunakan method form.save().
+## Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
+Method is_valid() digunakan untuk memvalidasi isi input dari form tersebut. Saat form menerima data (melalui request POST, misalnya), Django akan memeriksa apakah data tersebut memenuhi semua aturan validasi yang telah ditetapkan di dalam form. Jika semua validasi lulus, is_valid() akan mengembalikan True, yang berarti data dalam form dianggap valid dan siap diproses lebih lanjut. Sebaliknya, jika ada kesalahan dalam validasi, method ini akan mengembalikan False. Setelah is_valid() mengembalikan True, maka data akan disimpan ke dalam database menggunakan method form.save().
 
-# Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+## Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
 - `csrf_token` adalah token yang berfungsi sebagai *security*. Token ini di *generate* secara acak oleh Django untuk setiap permintaan form. Token ini ditanamkan ke dalam form dan dikirim bersama data saat form disubmit. Django kemudian memeriksa apakah token ini cocok dengan yang diharapkan (berdasarkan sesi pengguna). Jika token tidak cocok atau tidak ada, permintaan akan ditolak. Ini memastikan bahwa permintaan form benar-benar berasal dari situs yang sama bukan dari situs pihak ketiga yang mencoba memalsukan permintaan pengguna.
 - Jika kita tidak menambahkan `csrf_token` pada form Django, aplikasi kita dapat terkena serangan  Cross-Site Request Forgery (CSRF). Ini merupakan sebuah serangan eksploitasi web yang membuat pengguna tanpa sadar mengirim sebuah permintaan atau *request* ke *website* melalui *website* yang sedang digunakan saat itu. Dari situ aplikasi web akan mengeksekusi *request* tersebut yang sebenarnya bukan keinginan dari pengguna.
 - Penyerang dapat memanfaaatkan CSRF untuk mengarahkan pengguna ke halaman palsu dengan phising berbentuk pesan atau teks untuk meyakinkan pengguna agar mengklik *exploit*  URL tersebut. URL ini sudah disematkan kode yang berisi perintah tertentu sesuai dengan keinginan dari pelaku. Setelah URL di klik, maka perintah akan langsung berjalan baik itu mengganti password, perintah transfer, atau juga perintah lainnya yang berbahaya. Karena permintaan datang dari sesi pengguna yang valid, server dapat mengeksekusi permintaan tersebut jika tidak ada perlindungan CSRF.
 
-# Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step.
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step.
 ### Membuat input form untuk menambahkan objek model pada app sebelumnya.
 1. Membuat *file* baru di direktori main bernama `forms.py` untuk membuat struktur `form` yang menerima data Product. 
     Isi dari file `forms.py`
@@ -361,7 +362,7 @@ Method is_valid() digunakan untuk memvalidasi isi input dari form tersebut. Jika
       data = Product.objects.filter(pk=id)
       return HttpResponse(serializers.serialize("json", data), content_type="application/json")
   ```
-## Membuat routing URL untuk masing-masing views yang telah ditambahkan pada poin 2.
+### Membuat routing URL untuk masing-masing views yang telah ditambahkan pada poin 2.
 - Setelah membuat fungsi pada views.py, tambahkan import fungsi show_xml, show_json, show_xml_by_id, show_json_by_id pada `urls.py` yang berada pada direktori `main`.
 - Tambahkan path url dalam urlpatterns untuk mengakses fungsi yang sudah diimport
   ```
@@ -374,7 +375,7 @@ Method is_valid() digunakan untuk memvalidasi isi input dari form tersebut. Jika
     path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
   ]
   ```
-# Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman
+## Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman
 1. XML
    ![capturexml](https://github.com/user-attachments/assets/a9bb62ed-6529-4357-b250-2430d57abd10)
 2. JSON
@@ -392,3 +393,6 @@ Method is_valid() digunakan untuk memvalidasi isi input dari form tersebut. Jika
 * Niagahoster. (2022). _Belajar Django, Framework Python yang Kian Populer_. Diakses pada 10 September 2024, dari [https://dev.to/ivanadokic/django-web-framework-python-ebn](https://www.niagahoster.co.id/blog/django-framework/)
 * djangostars. (2024). _Top 14 Pros of Using Django for Python Web Development_. Diakses pada 10 September 2024, dari https://djangostars.com/blog/top-14-pros-using-django-web-development/
 * biznetgio. (2023). _Mengenal GIT, Definisi, Fungsi, hingga Manfaatnya Bagi Programmer_. Diakses pada 10 September 2024, dari [https://djangostars.com/blog/top-14-pros-using-django-web-development/](https://www.biznetgio.com/news/apa-itu-git)
+* Apidog. (2024). _XML vs JSON: A Comprehensive Comparison of Differences_. Diakses pada 16 September 2024, dari https://apidog.com/articles/xml-vs-json/. 
+* AWS. (2023). _Apa Perbedaan antara JSON dan XML?_. Diakses pada 16 September 2024, dari https://aws.amazon.com/id/compare/the-difference-between-json-xml/. 
+* axway. (2020). _API Formats: Why JSON won over XML_. Diakses pada 16 September 2024, dari https://blog.axway.com/learning-center/apis/api-management/why-json-won-over-xml#why-json-won-over-xml. 
