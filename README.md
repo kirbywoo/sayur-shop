@@ -1,7 +1,7 @@
 Link PWS : https://eva-yunia-sayurshop.pbp.cs.ui.ac.id
-
-# 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
-## Membuat sebuah proyek Django baru:
+# Tugas 2
+## 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
+### Membuat sebuah proyek Django baru:
   - Pertama, membuat direktori pada computer lokal dengan nama aplikasi E-Commerce (sayur-shop).
   - Buka command prompt pada direktori sayur-shop.
   - Agar aplikasi tidak bertabrakan dengan versi lain yang ada pada komputer kita, kita akan mengaktifkan virtual environment untuk mengisolasi package dan dependencies.
@@ -47,7 +47,7 @@ Link PWS : https://eva-yunia-sayurshop.pbp.cs.ui.ac.id
     git push origin main
     ```
 
-## Membuat aplikasi dengan nama main pada proyek tersebut
+### Membuat aplikasi dengan nama main pada proyek tersebut
   - Buka cmd pada direktori utama sayur-shop lalu aktifkan virtual environment dengan perintah `env\Scripts\activate`
   - Buat aplikasi main dengan perintah `python manage.py startapp main`. Direktori ini berisi struktur awal aplikasi Django
   - Buka file settings.py yang berada di dalam direktori proyek sayur-shop
@@ -65,7 +65,7 @@ Link PWS : https://eva-yunia-sayurshop.pbp.cs.ui.ac.id
     ```
   - Coba membuka file main.html di peramban web
 
-## Melakukan routing pada proyek agar dapat menjalankan aplikasi main
+#$# Melakukan routing pada proyek agar dapat menjalankan aplikasi main
   - Konfigurasi routing URL proyek dengan menambahkan rute URL dalam urls.py yang berada di dalam direktori proyek sayur-shop.
     ```
     Impor fungsi include dari django.urls
@@ -85,7 +85,7 @@ Link PWS : https://eva-yunia-sayurshop.pbp.cs.ui.ac.id
       urls.py pada proyek mengarahkan rute URL tingkat proyek dan dapat mengimpor rute URL dari berkas urls.py dan aplikasi-aplikasi.
       Hal ini memungkinkan aplikasi dalam proyek Django untuk bersifat modular dan terpisah
 
-## Membuat model pada aplikasi main dengan nama Product dan memiliki atribut wajib name, price, description
+### Membuat model pada aplikasi main dengan nama Product dan memiliki atribut wajib name, price, description
   - Buka berkas models.py pada direktori aplikasi main
   - Isi berkas models.py dengan nama Product dan memiliki atribut name, price, description, stock, dan image:
     ```python
@@ -102,7 +102,7 @@ Link PWS : https://eva-yunia-sayurshop.pbp.cs.ui.ac.id
     Jalankan perintah 'python manage.py makemigrations' untuk membuat migrasi model dan
     perintah 'python manage.py migrate' untuk menerapkan migrasi ke dalam basis data lokal
 
-## Membuat sebuah fungsi pada views.py untuk dikembalikan ke dalam sebuah template HTML yang menampilkan nama aplikasi serta nama dan kelas kamu.
+### Membuat sebuah fungsi pada views.py untuk dikembalikan ke dalam sebuah template HTML yang menampilkan nama aplikasi serta nama dan kelas kamu.
   - Buka berkas views.py yang berada di dalam direktori aplikasi main
   - Import fungsi render dari modul django.shortcuts 'from django.shortcuts import render'
   - Tambahkan fungsi show_main berikut:
@@ -129,7 +129,7 @@ Link PWS : https://eva-yunia-sayurshop.pbp.cs.ui.ac.id
     <p>{{ class }}</p>
     ```
 
-## Membuat sebuah routing pada urls.py aplikasi main untuk memetakan fungsi yang telah dibuat pada views.py
+### Membuat sebuah routing pada urls.py aplikasi main untuk memetakan fungsi yang telah dibuat pada views.py
   - Membuat berkas urls.py di dalam direktori aplikasi main
   - Isi file urls.py dengan:
     ```
@@ -144,7 +144,7 @@ Link PWS : https://eva-yunia-sayurshop.pbp.cs.ui.ac.id
     ```
     File urls.py pada aplikasi mengatur rute URL spesifik untuk fitur-fitur dalam aplikasi
 
-## Melakukan deployment ke PWS terhadap aplikasi yang sudah dibuat sehingga nantinya dapat diakses oleh teman-temanmu melalui Internet
+### Melakukan deployment ke PWS terhadap aplikasi yang sudah dibuat sehingga nantinya dapat diakses oleh teman-temanmu melalui Internet
   - Buka website PWS pada https://pbp.cs.ui.ac.id dan lakukan login
   - Pada homepage, klik tombol 'Create New Project'
   - Isi Project Name dengan sayurshop lalu klik tombol 'Create New Project'
@@ -169,7 +169,7 @@ Link PWS : https://eva-yunia-sayurshop.pbp.cs.ui.ac.id
     Jika 'Running' artinya proyek kamu sudah bisa diakses pada URL deployment
     Jika 'Failed' artinya gagal mendeploy proyek
 
-# 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
+## 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
    ![1](https://github.com/user-attachments/assets/56ca110d-125b-4fa6-b288-a656b016cada)
    - User mengirimkan request ke aplikasi web django dalam bentuk URL
    - File urls.py akan memetakan URL yang diminta oleh pengguna ke fungsi view yang sesuai
@@ -186,7 +186,7 @@ Link PWS : https://eva-yunia-sayurshop.pbp.cs.ui.ac.id
     >> - views.py memproses permintaan, mengambil data dari models.py jika diperlukan, dan mengirimkan data tersebut ke template HTML.
     >> - Template HTML merender data menjadi halaman web yang dikirim kembali ke pengguna.
 
-# 3. Jelaskan fungsi git dalam pengembangan perangkat lunak!
+## 3. Jelaskan fungsi git dalam pengembangan perangkat lunak!
    - Git Memungkinkan tim developer berkolaborasi dalam pengembangan perangkat lunak.
      Tim developer dapat mengelola repositori bersama dan menggabungkan perubahan yang dilakukan seluruh anggota tim.
    - Git memungkinkan untuk melakukan branching dan merging.
@@ -197,13 +197,13 @@ Link PWS : https://eva-yunia-sayurshop.pbp.cs.ui.ac.id
    - Git sebagai backup dan penyimpanan terpusat.
      Git menyimpan seluruh riwayat versi dalam repositori lokal dan, jika dikonfigurasi, juga di repositori remote.
      selain itu, Git memiliki kemampuan _Distributed Version Control System_ yang berarti tiap developer memilki salinan lengkap pada repositori komputer mereka. Ini memungkinkan pengembangan offline dan mengurangi risiko kehilangan data.
-# 4. Menurut Anda, dari semua framework yang ada, mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak?
+## 4. Menurut Anda, dari semua framework yang ada, mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak?
   - Karena Django didasarkan pada python, dimana bahasa ini merupakan bahasa pemrograman tingkat tinggi, dinamis, dan terinterpretasi yang lebih mudah dipelajari oleh _programmer_ pemula.
   - Karena Django merupakan framework yang lengkap karena menyediakan semua fitur yang diperlukan untuk membangun aplikasi yang lengkap secara langsung (filosofi '_Batteries Included_').
   - Django memungkinkan kita untuk menerapkan konsep MVT. Konsep ini memungkinkan pemula untuk mengorganisasi dan mengelola kode dengan lebih terstruktur.
   - Django memiliki dokumentasi yang luas dan komunitas yang besar. Ini sangat membantu bagi pemula yang mungkin sering menghadapi masalah atau memiliki pertanyaan, mereka dapat dengan mudah mencari tutorial, forum diskusi, dan sumber daya untuk dipelajari.
   - Django merupakan framework yang bersifat open source yang berarti bebas untuk diakses, dugunakan, dan dimodifikasi tanpa mengeluarkan biaya untuk membeli lisensi.
-# 5. Mengapa model pada Django disebut sebagai ORM?
+## 5. Mengapa model pada Django disebut sebagai ORM?
   - Model pada Django disebut sebagai ORM (Object-Relational Mapping) karena fungsinya sebagai jembatan antara database relasional dan objek dalam kdoe Python.
   - Pada Django memungkinkan pengembang untuk bekerja dengan database tanpa harus menulis SQL.
   - Setiap tabel di database direpresentasikan sebagai kelas model. Tiap kolom pada tabel menunjukkan atribut kelas dan tiap baris merepresentasikan objek dari kelas tersebut.
@@ -222,7 +222,7 @@ Link PWS : https://eva-yunia-sayurshop.pbp.cs.ui.ac.id
 ## Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
 Lebih baik atau tidaknya antara XML dan JSON tergantung pada kebutuhan. Untuk pengembangan aplikasi web modern dan komunikasi API, JSON lebih baik karena sifatnya yang ringan, sederhana, dan kemudahan dalam integrasi dengan JavaScript. 
 Namun, jika proyek memerlukan struktur data yang lebih kompleks, dukungan validasi skema, atau penggunaan atribut dalam elemen data, XML bisa menjadi pilihan yang lebih tepat. XML lebih kompatibel dengan sistem lama dan unggul dalam menangani markup dokumen.
-### JSON lebih populer dibandungkan dengan XML karena beberapa alasan yaitu:
+### JSON lebih populer dibandingkan dengan XML karena beberapa alasan yaitu:
 #### Sintaks yang lebih ringkas dan sederhana
 Menggunakan sintaks yang lebih sederhana dengan pasangan key-value. Ini membuat JSON lebih mudah dibaca dan ditulis, baik oleh manusia maupun oleh mesin. Contoh sintaks JSON:
     ```
@@ -375,6 +375,7 @@ Method is_valid() digunakan untuk memvalidasi isi input dari form tersebut. Saat
     path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
   ]
   ```
+  Path ini memungkinkan pengguna untuk mengambil data produk dalam format XML atau JSON, baik seluruh produk atau produk tertentu berdasarkan ID yang dimasukkan dalam URL
 ## Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman
 1. XML
    ![capturexml](https://github.com/user-attachments/assets/a9bb62ed-6529-4357-b250-2430d57abd10)
