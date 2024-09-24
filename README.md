@@ -389,10 +389,10 @@ Method is_valid() digunakan untuk memvalidasi isi input dari form tersebut. Saat
    ![capturejsonid](https://github.com/user-attachments/assets/39a56b39-9b09-42a8-b246-72d13e7e0115)
 
 # Tugas 4
-## Apa perbedaan antara HttpResponseRedirect() dan redirect()
+## 1. Apa perbedaan antara HttpResponseRedirect() dan redirect()
 Sebenarnya kegunaan antara `HttpResponseRedirect()` dan `redirect()` sama saja yaitu untuk mengalihkan (redirect) ke URL lain. `redirect()` merupakan _shortcut_ atau _helper function_ dari `HttpResponseRedirect()`. Namun perbedaannya terletak pada argumen yang dapat diterima. `HttpResponseRedirect()` hanya dapat menerima argumen berupa URL saja, sedangkan `redirect()` dapat menerima model, view, atau url.
 
-## Jelaskan cara kerja penghubungan model Product dengan User!
+## 2. Jelaskan cara kerja penghubungan model Product dengan User!
 Di dalam file models.py, kita harus menghubungkan model Product dengan model User menggunakan ForeignKey, yang memungkinkan setiap produk terkait dengan pengguna tertentu. Misalnya:
 ```
 user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -427,7 +427,7 @@ Karena kita melakukan perubahan pada file models, maka kita harus melakukan migr
 
 Untuk mengecek apakah kita sudah berhasil menghubungkan model Product dengan User kita dapat menjalankan server dan membuat akun baru serta login. Selanjutnya membuat produk dan lihat apakah produk yang kita buat hanya muncul pada akun pengguna yang sesuai.
 
-## Apa perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut.
+## 3. Apa perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut.
 ### Perbedaan antara authentication dan authorization
 Authentication merupakan proses untuk memverifikasi identitas pengguna. Server akan mengecek siapa user yang saat ini sedang login. Contohnya pada saat pengguna melakukan login, setelah otentikasi berhasil, pengguna diaggap "authenticated" atau terverifikasi. Sedangkan Authorization merupakan proses untuk memeriksa apakah pengguna memiliki izin atau hak akses terhadap data atau aksi tertentu. Pengguna yang berhasil login mungkin diizinkan untuk melihat halaman profil mereka, tetapi mungkin tidak diizinkan untuk mengakses halaman admin.
 ### apakah yang dilakukan saat pengguna login?
@@ -442,7 +442,7 @@ Authentication merupakan proses untuk memverifikasi identitas pengguna. Server a
    * Django menggunakan permissions dan groups untuk mengatur hak akses atau otorisasi.
    * Django juga menyediakan dekorator seperti @login_required untuk membatasi akses ke halaman tertentu hanya kepada pengguna yang sudah login (authenticated).
 
-## Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?
+## 4. Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?
 Django mengingat pengguna yang telah login menggunakan sesi dan cookies. Sesi digunakan untuk melacak informasi terkait pengguna yang sedang login. Setelah pengguna telah terautentikasi, maka Django akan membuat *session record* di server dan menghubungkan sesi tersebut dengan pengguna yang terautentikasi. Tiap pengguna memiliki *session* ID yang unik. Setelah itu, *session* ID disimpan dalam sebuah cookie yang dikirimkan ke browser pengguna atau yang disebut sebagai *session cookie*. Setiap kali pengguna mengirimkan permintaan baru (misalnya membuka halaman lain), browser akan mengirim kembali cookie tersebut ke server, dan Django menggunakan session ID yang ada di cookie untuk mencari data sesi pengguna di server. Jika session ID cocok, Django tahu bahwa pengguna tersebut masih terautentikasi.
 
 ### Kegunaan lain dari cookie
@@ -451,6 +451,68 @@ Django mengingat pengguna yang telah login menggunakan sesi dan cookies. Sesi di
 * Melacak perilaku pengguna, seperti halaman mana yang mereka kunjungi atau berapa lama mereka berada di situs web, untuk membantu pemilik situs web memahami audiens mereka dengan lebih baik.
 * Menyimpan pengaturan website - cookie akan mengingat preferensi pengaturan yang pengguna terapkan pada suatu situs web. Misalnya pengaturan terkait bahasa atau notifikasi.
 
+### Apakah semua cookies aman digunakan?
+Tidak semua cookie aman digunakan. Meskipun cookie dapat menyediakan banyak manfaat, mereka juga dapat menimbulkan risiko keamanan dan privasi jika tidak digunakan dengan benar.
+Beberapa risiko potensial terkait dengan cookie:
+* Risiko keamanan : Cookie bisa saja rentan terjadap peretasan dan eksploitasi oleh oknum yang tidak bertanggung jawab. Jika cookie tidak terjamin dengan benar, peretas dapat mendapatkan akses ke informasi sensitif/pribadi kita.
+* CSRF : Cookie juga bisa menjadi bagian dari serangan **CSRF**, di mana pengguna secara tidak sadar mengirim permintaan berbahaya ke situs web tempat mereka sudah login.
+* Third-party Cookies : Cookie ini berasal dari domain selain yang sedang dikunjungi oleh pengguna. Ini sering dimanfaatkan oleh perusahaan iklan untuk melacak pengguna diberbagai situs.
+
+## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+### Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar.
+#### Mengimplementasikan fungsi registrasi
+- Mengaktifkan *virtual environment,* lalu pada `views.py` yang ada pada subdirektori `main` tambahkan *import* `UserCreationForm` dan `messages`.
+- Buat fungsi register pada `views.py` yang berfungsi untuk menghasilkan formulir registrasi secara otomatis dan menghasilkan akun pengguna ketika data di-*submit* dari form.
+- Membuat berkas HTML bernama `register.html` pada direktori main/templates.
+- Mengimpor fungsi register pada *file* `urls.py` yang ada pada subdirektori `main`, lalu tambahkan *path url* ke dalam `urlpatterns` untuk mengakses fungsi yang sudah diimpor.
+#### Membuat Fungsi Login
+- Tambahkan import `authenticate`, `login`, dan `AuthenticationForm` pada `views.py`
+- Buat fungsi `login_user` ke dalam `views.py`. yang berfungsi untuk mengautentikasi pengguna yang ingin *login*.
+- Buat berkas HTML dengan nama `login.html` pada direktori `main/templates`
+- Mengimpor fungsi login_user pada *file* `urls.py` yang ada pada subdirektori `main`, lalu tambahkan *path url* ke dalam `urlpatterns` untuk mengakses fungsi yang sudah diimpor.
+#### Membuat Fungsi Logout
+- Tambahkan *import* `logout` pada `views.py`
+- Buat fungsi logout_user yang berfungsi untuk melakukan mekanisme logout.
+- Menambahkan tombol logout pada berkas `main.html`
+- Mengimpor fungsi logout_user pada *file* `urls.py` yang ada pada subdirektori `main`, lalu tambahkan *path url* ke dalam `urlpatterns` untuk mengakses fungsi yang sudah diimpor.
+### Membuat dua akun pengguna dengan masing-masing tiga dummy data menggunakan model yang telah dibuat pada aplikasi sebelumnya untuk setiap akun di lokal.
+- Lakukan register untuk membuat akun pengguna, disini kita membuat 2 akun baru.
+- Setelah berhasil register akun, lakukan login dengan menginput *username* dan *password* pada halaman login.
+- Buat masing-masing 3 *entry* data per akun menggunakan model yang sudah dibuat sebelumnya.
+### Menghubungkan model Product dengan User.
+- Pada `models.py` import User dan tambahkan `user = models.ForeignKey(User, on_delete=models.CASCADE)` dalam *class* Product.
+- Tambahkan kode berikut pada `views.py` di dalam fungsi `create_product_entry`
+  ```
+  product_entry = form.save(commit=False)
+  product_entry.user = request.user
+  product_entry.save()
+  ```
+- Pada fungsi `show_main` ubah value product_entries menjadi `mood_entries = MoodEntry.objects.filter(user=request.user)` dan tambahkan `'name': request.user.username,` di dalam context.
+- Lakukan migrasi model dengan menjalankan perintah `python manage.py makemigrations` dan `python manage.py migrate`
+- Pada `settings.py` import os dan ubah variabel DEBUG dengan `DEBUG = not PRODUCTION` dan tambahkan `PRODUCTION = os.getenv("PRODUCTION", False)`
+### Menampilkan detail informasi pengguna yang sedang logged in seperti username dan menerapkan cookies seperti last login pada halaman utama aplikasi.
+- Tambahkan *import* `login_required` pada `views.py`  dan dekorator `@login_required(login_url='/login')` diatas fungsi `show_main` untuk meretriksi akses halaman main
+- Tambahkan pula import `HttpResponseRedirect`, `reverse`, dan `datetime`
+- Pada fungsi `login_user`, tambahkan fungsionalitas menambahkan *cookie* yang bernama `last_login` untuk melihat kapan terakhir kali pengguna melakukan *login*. Caranya adalah dengan mengganti kode yang ada pada blok `if form.is_valid()` seperti ini:
+  ```
+  def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse('main:login'))
+    response.delete_cookie('last_login')
+    return response
+  ```
+- Tambahkan `'last_login': request.COOKIES['last_login'],` pada fungsi `show_main` di dalam variabel `context`.
+- Ubah fungsi `logout_user` menjadi:
+  ```
+  def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse('main:login'))
+    response.delete_cookie('last_login')
+    return response
+  ```
+- Pada *file* `main.html` tambahkan `<h5>Sesi terakhir login: {{ last_login }}</h5>` setelah tombol *logout* untuk menampilkan data *last login*
+- Runserver menggunakan perintah `python manage.py runserver`
+
 ## Referensi
 * DEV. (2021). _Django Web Framework (Python)_. Diakses pada 10 September 2024, dari https://dev.to/ivanadokic/django-web-framework-python-ebn
 * Niagahoster. (2022). _Belajar Django, Framework Python yang Kian Populer_. Diakses pada 10 September 2024, dari [https://dev.to/ivanadokic/django-web-framework-python-ebn](https://www.niagahoster.co.id/blog/django-framework/)
@@ -458,4 +520,6 @@ Django mengingat pengguna yang telah login menggunakan sesi dan cookies. Sesi di
 * biznetgio. (2023). _Mengenal GIT, Definisi, Fungsi, hingga Manfaatnya Bagi Programmer_. Diakses pada 10 September 2024, dari [https://djangostars.com/blog/top-14-pros-using-django-web-development/](https://www.biznetgio.com/news/apa-itu-git)
 * Apidog. (2024). _XML vs JSON: A Comprehensive Comparison of Differences_. Diakses pada 16 September 2024, dari https://apidog.com/articles/xml-vs-json/. 
 * AWS. (2023). _Apa Perbedaan antara JSON dan XML?_. Diakses pada 16 September 2024, dari https://aws.amazon.com/id/compare/the-difference-between-json-xml/. 
-* axway. (2020). _API Formats: Why JSON won over XML_. Diakses pada 16 September 2024, dari https://blog.axway.com/learning-center/apis/api-management/why-json-won-over-xml#why-json-won-over-xml. 
+* axway. (2020). _API Formats: Why JSON won over XML_. Diakses pada 16 September 2024, dari https://blog.axway.com/learning-center/apis/api-management/why-json-won-over-xml#why-json-won-over-xml.
+* stackoverflow. (2013). _What the difference between using Django redirect and HttpResponseRedirect?_. Diakses pada 25 September 2024, dari https://stackoverflow.com/questions/13304149/what-the-difference-between-using-django-redirect-and-httpresponseredirect
+* cmlabs. (2022). _Apa itu Browser Cookie? Pengertian, Fungsi, Jenis, & Isinya_. Diakses pada 25 September 2024, dari https://cmlabs.co/id-id/seo-terms/browser-cookie
