@@ -1,4 +1,4 @@
-Link PWS : https://eva-yunia-sayurshop.pbp.cs.ui.ac.id
+Link PWS : http://eva-yunia-sayurshop.pbp.cs.ui.ac.id
 # Tugas 2
 ## 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
 ### Membuat sebuah proyek Django baru:
@@ -388,6 +388,68 @@ Method is_valid() digunakan untuk memvalidasi isi input dari form tersebut. Saat
 4. JSON by ID
    ![capturejsonid](https://github.com/user-attachments/assets/39a56b39-9b09-42a8-b246-72d13e7e0115)
 
+# Tugas 4
+## Apa perbedaan antara HttpResponseRedirect() dan redirect()
+Sebenarnya kegunaan antara `HttpResponseRedirect()` dan `redirect()` sama saja yaitu untuk mengalihkan (redirect) ke URL lain. `redirect()` merupakan _shortcut_ atau _helper function_ dari `HttpResponseRedirect()`. Namun perbedaannya terletak pada argumen yang dapat diterima. `HttpResponseRedirect()` hanya dapat menerima argumen berupa URL saja, sedangkan `redirect()` dapat menerima model, view, atau url.
+
+## Jelaskan cara kerja penghubungan model Product dengan User!
+Di dalam file models.py, kita harus menghubungkan model Product dengan model User menggunakan ForeignKey, yang memungkinkan setiap produk terkait dengan pengguna tertentu. Misalnya:
+```
+user = models.ForeignKey(User, on_delete=models.CASCADE)
+```
+Cara kerja:
+* Field `user = models.ForeignKey(User, on_delete=models.CASCADE)` membuat hubungan satu-ke-banyak antara `Product` dan `User`. Artinya, setiap produk dihubungkan dengan seorang user tertentu, dan satu user bisa memiliki banyak produk.
+* `on_delete=models.CASCADE` berarti jika pengguna dihapus, maka semua produk yang terkait dengan pengguna tersebut juga akan dihapus dari database.
+Saat membuat produk baru, kita perlu memastikan bahwa produk tersebut terkait dengan pengguna yang sedang login. Di dalam file views.py, kita mengubah kode pada fungsi create_product_entry
+```
+product_entry = form.save(commit=False)
+product_entry.user = request.user
+product_entry.save()
+```
+Cara kerja:
+* `commit=False` digunakan untuk membuat objek produk dari form tanpa langsung menyimpannya ke database.
+* Setelah itu, field `user` diisi dengan `request.user`, yaitu user yang sedang terotorisasi atau sedang login.
+* Setelah user ditetapkan, objek disimpan ke database menggunakan `product.save()`.
+Agar pengguna hanya melihat produk yang mereka buat sendiri, filter produk berdasarkan user yang sedang login dengan menambahkan value `user=request.user` pada product_entries pada fungsi show_main, lalu tambahkan `'name': request.user.username,` pada context
+```
+def show_main(request):
+    product_entries = Product.objects.filter(user=request.user)
+
+    context = {
+         'name': request.user.username,
+         ...
+    }
+```
+Cara kerja:
+* `Product.objects.filter(user=request.user)` hanya mengambil produk yang dimiliki oleh pengguna yang sedang login.
+* Field `request.user.username` digunakan untuk menampilkan nama pengguna yang sedang login di halaman list.
+Karena kita melakukan perubahan pada file models, maka kita harus melakukan migrasi model. Proses `makemigrations` akan membuat file migrasi untuk menambahkan hubungan ForeignKey ke model `Product`. `migrate` akan menerapkan perubahan tersebut ke dalam database.
+
+Untuk mengecek apakah kita sudah berhasil menghubungkan model Product dengan User kita dapat menjalankan server dan membuat akun baru serta login. Selanjutnya membuat produk dan lihat apakah produk yang kita buat hanya muncul pada akun pengguna yang sesuai.
+
+## Apa perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut.
+### Perbedaan antara authentication dan authorization
+Authentication merupakan proses untuk memverifikasi identitas pengguna. Server akan mengecek siapa user yang saat ini sedang login. Contohnya pada saat pengguna melakukan login, setelah otentikasi berhasil, pengguna diaggap "authenticated" atau terverifikasi. Sedangkan Authorization merupakan proses untuk memeriksa apakah pengguna memiliki izin atau hak akses terhadap data atau aksi tertentu. Pengguna yang berhasil login mungkin diizinkan untuk melihat halaman profil mereka, tetapi mungkin tidak diizinkan untuk mengakses halaman admin.
+### apakah yang dilakukan saat pengguna login?
+* Login merupakan proses authentication. Ketika pengguna memasukkan username dan password, Django memverifikasi apakah kredensial tersebut benar. Jika valid, pengguna dianggap terautentikasi, dan Django akan membuat sesi pengguna (menggunakan cookie).
+* Selama sesi ini, pengguna dapat mengakses halaman atau sumber daya yang diizinkan berdasarkan hasil dari pengecekan Authorization.
+### Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut.
+1. Authentication pada Django
+   * Django menyediakan mekanisme otentikasi bawaan melalui model `User` yang ada di `django.contrib.auth.models`.
+   * Fungsi login di Django menggunakan `authenticate` dan `login` yang disediakan oleh Django untuk memverifikasi pengguna dan mengelola sesi.
+   * `authenticate` digunakan untuk memverifikasi kombinasi username dan password. Jika cocok, `login` digunakan untuk memulai sesi dengan menyimpan informasi pengguna yang terautentikasi.
+3. Authorization pada Django
+   * Django menggunakan permissions dan groups untuk mengatur hak akses atau otorisasi.
+   * Django juga menyediakan dekorator seperti @login_required untuk membatasi akses ke halaman tertentu hanya kepada pengguna yang sudah login (authenticated).
+
+## Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?
+Django mengingat pengguna yang telah login menggunakan sesi dan cookies. Sesi digunakan untuk melacak informasi terkait pengguna yang sedang login. Setelah pengguna telah terautentikasi, maka Django akan membuat *session record* di server dan menghubungkan sesi tersebut dengan pengguna yang terautentikasi. Tiap pengguna memiliki *session* ID yang unik. Setelah itu, *session* ID disimpan dalam sebuah cookie yang dikirimkan ke browser pengguna atau yang disebut sebagai *session cookie*. Setiap kali pengguna mengirimkan permintaan baru (misalnya membuka halaman lain), browser akan mengirim kembali cookie tersebut ke server, dan Django menggunakan session ID yang ada di cookie untuk mencari data sesi pengguna di server. Jika session ID cocok, Django tahu bahwa pengguna tersebut masih terautentikasi.
+
+### Kegunaan lain dari cookie
+* Melakukan personalisasi konten situs web untuk pengguna, seperti menampilkan produk atau penawaran tertentu berdasarkan riwayat penelusuran mereka.
+* Mengingat preferensi pengguna, seperti bahasa atau ukuran font, untuk meningkatkan pengalaman *browsing* mereka.
+* Melacak perilaku pengguna, seperti halaman mana yang mereka kunjungi atau berapa lama mereka berada di situs web, untuk membantu pemilik situs web memahami audiens mereka dengan lebih baik.
+* Menyimpan pengaturan website - cookie akan mengingat preferensi pengaturan yang pengguna terapkan pada suatu situs web. Misalnya pengaturan terkait bahasa atau notifikasi.
 
 ## Referensi
 * DEV. (2021). _Django Web Framework (Python)_. Diakses pada 10 September 2024, dari https://dev.to/ivanadokic/django-web-framework-python-ebn
