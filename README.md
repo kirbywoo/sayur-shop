@@ -513,6 +513,12 @@ Beberapa risiko potensial terkait dengan cookie:
 - Pada *file* `main.html` tambahkan `<h5>Sesi terakhir login: {{ last_login }}</h5>` setelah tombol *logout* untuk menampilkan data *last login*
 - Runserver menggunakan perintah `python manage.py runserver`
 
+# Tugas 5
+## 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+1. Inline styles 
+2. ID selector
+3. Classess selector
+4. Element selector
 ## Referensi
 * DEV. (2021). _Django Web Framework (Python)_. Diakses pada 10 September 2024, dari https://dev.to/ivanadokic/django-web-framework-python-ebn
 * Niagahoster. (2022). _Belajar Django, Framework Python yang Kian Populer_. Diakses pada 10 September 2024, dari [https://dev.to/ivanadokic/django-web-framework-python-ebn](https://www.niagahoster.co.id/blog/django-framework/)
