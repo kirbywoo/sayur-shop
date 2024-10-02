@@ -620,19 +620,27 @@ Contoh Implementasi:
   ```
 * Lalu tambahkan potongan kode berikut di main.html
   ```
-  ...
-<tr>
-    ...
-    <td>
-        <a href="{% url 'main:edit_product' Product.pk %}">
-            <button>
-                Edit
-            </button>
-        </a>
-    </td>
-</tr>
-...
+  <tr>
+      ...
+      <td>
+          <a href="{% url 'main:edit_product' Product.pk %}">
+              <button>
+                  Edit
+              </button>
+          </a>
+      </td>
+  </tr>
   ```
+### Kustomisasi desain pada template HTML yang telah dibuat pada tugas-tugas sebelumnya menggunakan CSS atau CSS framework (seperti Bootstrap, Tailwind, Bulma)
+* Buatlah file global.css di /static/css pada root directory
+* Agar style CSS yang ditambahkan di global.css dapat digunakan dalam template Django, kita perlu menambahkan file tersebut ke base.html.
+* Menambahkan custom styling ke global.css
+* Selanjutnya saya melakukan styling menggunakan tailwind pada main.html, login.html, register.html, edit_product.html, create_product_entry.html, card_product.html, card_info.html
+### Membuat navigation bar
+* agar navigation bar menjadi responsive, kita juga melakukan pengaturan untuk device mobile
+* Ini merupakan tampilan web saya yang sudah di settings agar responsive
+  ![image](https://github.com/user-attachments/assets/90cd9781-9dd2-4db8-ab90-68fa1df3a8b9)
+
 ### Referensi
 * DEV. (2021). _Django Web Framework (Python)_. Diakses pada 10 September 2024, dari https://dev.to/ivanadokic/django-web-framework-python-ebn
 * Niagahoster. (2022). _Belajar Django, Framework Python yang Kian Populer_. Diakses pada 10 September 2024, dari [https://dev.to/ivanadokic/django-web-framework-python-ebn](https://www.niagahoster.co.id/blog/django-framework/)
