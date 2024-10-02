@@ -515,11 +515,80 @@ Beberapa risiko potensial terkait dengan cookie:
 
 # Tugas 5
 ## 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
-1. Inline styles 
-2. ID selector
-3. Classess selector
-4. Element selector
-## Referensi
+1. **Inline styles**: Gaya yang diterapkan langsung pada elemen HTML menggunakan atribut **`style`**. Ini memiliki prioritas tertinggi dengan nilai specificity 1000.
+2. **ID selector**: Selector yang menggunakan ID elemen, misalnya **`#header`**. Ini memiliki nilai specificity 100.
+3. **Class selector**: Selector yang menggunakan kelas, misalnya **`.menu`**, serta pseudo-class dan attribute selector. Ini memiliki nilai specificity 10.
+4. **Element selector**: Selector yang menggunakan nama elemen, misalnya **`p`** atau **`h1`**. Ini memiliki nilai specificity 1
+
+## 2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
+- **Meningkatkan Pengalaman Pengguna**: Dengan responsive design, situs web dapat menyesuaikan tampilannya sesuai dengan ukuran layar perangkat yang digunakan, baik itu desktop, tablet, atau smartphone. Ini membuat pengguna dapat dengan mudah membaca informasi/tampilan yang ada pada website kita.
+- **Efisiensi Biaya**: Mengembangkan satu versi situs web yang responsif lebih efisien dibandingkan membuat versi terpisah untuk desktop dan mobile. Ini bisa mengurangi biaya pemeliharaan dan pengembangan sebuah website.
+- **SEO (Search Engine Optimization):** Google memberikan peringkat lebih tinggi pada situs web yang mobile-friendly. Dengan responsive design, situs web kita lebih berpeluang untuk muncul di hasil pencarian yang lebih tinggi yang dapat meningkatkan visibilitas dan trafik website.
+- **Meningkatkan fungsional situs web**: Dengan banyaknya variasi ukuran layar yang tersedia (ponsel, tablet, laptop, monitor besar), responsive design memastikan situs web tetap terlihat baik dan fungsional pada semua resolusi tersebut.
+
+## 3. Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+### **1. Margin**
+Margin mengontrol ruang di luar batas (border) elemen, memisahkan elemen dari elemen lain di sekitarnya, sehingga menambah jarak antar elemen. Ini membuat tata letak yang lebih teratur dan mencegah elemen saling bertumpukan.
+**Contoh Implementasi**
+```
+cssmargin: 10px; */* Menambahkan margin sebesar 10 piksel di semua sisi */*
+```
+### **2. Border**
+Border adalah garis yang mengelilingi konten elemen HTML, memberikan batas visual yang jelas di sekitar elemen tersebut. Ini dapat membantu kita untuk menyajikan data dengan visual yang lebih jelas.
+**Contoh Implementasi**
+```
+cssborder: 1px solid black; */* Menambahkan border 1 piksel dengan garis solid berwarna hitam */*
+```
+### **3. Padding**
+Padding mengatur ruang di dalam batas (border) elemen, menciptakan jarak antara konten dan batas. Ini membuat konten lebih mudah dibaca dan tidak terlalu dekat dengan border, memberikan tampilan yang lebih bersih.
+**Contoh Implementasi**
+```
+csspadding: 10px; */* Menambahkan padding sebesar 10 piksel di semua sisi */*
+```
+## 4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+### 1. Flex Box (Flexible Box)
+Flex Box adalah sebuah mode pengaturan layout pada CSS yang digunakan untuk mengatur elemen atau container beserta item didalamnya pada halaman web. Flex Box memungkinkan kita untuk membuat struktur layout yang responsif dan fleksibel tanpa menggunakan float atau positioning.
+Kegunaan Flex Box:
+Mengatur Elemen Responsif: Flex Box memungkinkan kita untuk mengatur elemen-elemen dalam satu baris atau kolom, serta membuat mereka responsif terhadap perubahan ukuran layar.
+Pengaturan Aligment: Flex Box menyediakan berbagai properti untuk mengatur aligment elemen, seperti flex-direction, justify-content, dan align-items.
+Mengatasi Ruang Kosong: Flex Box dapat mengatasi ruang kosong dengan menggunakan properti flex-wrap untuk membuat elemen-elemen yang tidak muat dalam satu baris ke baris berikutnya.
+Contoh Implementasi:
+```
+<div class="container">
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
+</div>
+
+.container {
+  display: flex;
+  flex-direction: row; /* Default: row */
+  justify-content: space-between; /* Distribusi ruang di antara item */
+}
+```
+### 2. Grid Layout
+Grid Layout adalah sebuah mode pengaturan layout pada CSS yang memungkinkan kita untuk membuat struktur grid yang kompleks dan responsif. Grid Layout memungkinkan kita untuk mengatur elemen-elemen dalam grid yang terdiri dari baris dan kolom.
+Kegunaan Grid Layout:
+Mengatur Struktur Grid: Grid Layout memungkinkan kita untuk membuat struktur grid yang kompleks dengan menggunakan properti seperti grid-template-columns dan grid-template-rows.
+Pengaturan Elemen: Grid Layout memungkinkan kita untuk mengatur elemen-elemen dalam grid dengan menggunakan properti seperti grid-column dan grid-row.
+Responsif: Grid Layout dapat membuat struktur grid yang responsif terhadap perubahan ukuran layar.
+Contoh Implementasi:
+```
+<div class="grid-container">
+  <div class="grid-item">Item 1</div>
+  <div class="grid-item">Item 2</div>
+  <div class="grid-item">Item 3</div>
+</div>
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Tiga kolom dengan ukuran sama */
+  grid-template-rows: repeat(2, 100px); /* Dua baris dengan ukuran 100px */
+}
+```
+
+## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
+### Referensi
 * DEV. (2021). _Django Web Framework (Python)_. Diakses pada 10 September 2024, dari https://dev.to/ivanadokic/django-web-framework-python-ebn
 * Niagahoster. (2022). _Belajar Django, Framework Python yang Kian Populer_. Diakses pada 10 September 2024, dari [https://dev.to/ivanadokic/django-web-framework-python-ebn](https://www.niagahoster.co.id/blog/django-framework/)
 * djangostars. (2024). _Top 14 Pros of Using Django for Python Web Development_. Diakses pada 10 September 2024, dari https://djangostars.com/blog/top-14-pros-using-django-web-development/
