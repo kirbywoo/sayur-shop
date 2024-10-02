@@ -525,6 +525,12 @@ Beberapa risiko potensial terkait dengan cookie:
 - **Efisiensi Biaya**: Mengembangkan satu versi situs web yang responsif lebih efisien dibandingkan membuat versi terpisah untuk desktop dan mobile. Ini bisa mengurangi biaya pemeliharaan dan pengembangan sebuah website.
 - **SEO (Search Engine Optimization):** Google memberikan peringkat lebih tinggi pada situs web yang mobile-friendly. Dengan responsive design, situs web kita lebih berpeluang untuk muncul di hasil pencarian yang lebih tinggi yang dapat meningkatkan visibilitas dan trafik website.
 - **Meningkatkan fungsional situs web**: Dengan banyaknya variasi ukuran layar yang tersedia (ponsel, tablet, laptop, monitor besar), responsive design memastikan situs web tetap terlihat baik dan fungsional pada semua resolusi tersebut.
+Contoh Aplikasi yang Sudah Menerapkan Responsive Design:
+Google: Semua layanan Google, termasuk mesin pencari, Gmail, dan Google Drive, menggunakan responsive design untuk memastikan pengalaman pengguna yang konsisten di semua perangkat.
+X: Platform media sosial ini juga menggunakan responsive design untuk memberikan pengalaman pengguna yang optimal di desktop dan perangkat mobile.
+
+Belum Menerapkan Responsive Design:
+Beberapa Situs Web Lokal: Masih ada banyak situs web lokal di Indonesia seperti situs web pemerintah yang belum menerapkan responsive design, sehingga tampilan mereka tidak optimal ketika diakses melalui perangkat mobile.
 
 ## 3. Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
 ### **1. Margin**
@@ -549,9 +555,10 @@ csspadding: 10px; */* Menambahkan padding sebesar 10 piksel di semua sisi */*
 ### 1. Flex Box (Flexible Box)
 Flex Box adalah sebuah mode pengaturan layout pada CSS yang digunakan untuk mengatur elemen atau container beserta item didalamnya pada halaman web. Flex Box memungkinkan kita untuk membuat struktur layout yang responsif dan fleksibel tanpa menggunakan float atau positioning.
 Kegunaan Flex Box:
-Mengatur Elemen Responsif: Flex Box memungkinkan kita untuk mengatur elemen-elemen dalam satu baris atau kolom, serta membuat mereka responsif terhadap perubahan ukuran layar.
-Pengaturan Aligment: Flex Box menyediakan berbagai properti untuk mengatur aligment elemen, seperti flex-direction, justify-content, dan align-items.
-Mengatasi Ruang Kosong: Flex Box dapat mengatasi ruang kosong dengan menggunakan properti flex-wrap untuk membuat elemen-elemen yang tidak muat dalam satu baris ke baris berikutnya.
+* Mengatur Elemen Responsif: Flex Box memungkinkan kita untuk mengatur elemen-elemen dalam satu baris atau kolom, serta membuat mereka responsif terhadap perubahan ukuran layar.
+* Pengaturan Aligment: Flex Box menyediakan berbagai properti untuk mengatur aligment elemen, seperti flex-direction, justify-content, dan align-items.
+* Mengatasi Ruang Kosong: Flex Box dapat mengatasi ruang kosong dengan menggunakan properti flex-wrap untuk membuat elemen-elemen yang tidak muat dalam satu baris ke baris berikutnya.
+
 Contoh Implementasi:
 ```
 <div class="container">
@@ -569,9 +576,10 @@ Contoh Implementasi:
 ### 2. Grid Layout
 Grid Layout adalah sebuah mode pengaturan layout pada CSS yang memungkinkan kita untuk membuat struktur grid yang kompleks dan responsif. Grid Layout memungkinkan kita untuk mengatur elemen-elemen dalam grid yang terdiri dari baris dan kolom.
 Kegunaan Grid Layout:
-Mengatur Struktur Grid: Grid Layout memungkinkan kita untuk membuat struktur grid yang kompleks dengan menggunakan properti seperti grid-template-columns dan grid-template-rows.
-Pengaturan Elemen: Grid Layout memungkinkan kita untuk mengatur elemen-elemen dalam grid dengan menggunakan properti seperti grid-column dan grid-row.
-Responsif: Grid Layout dapat membuat struktur grid yang responsif terhadap perubahan ukuran layar.
+* Mengatur Struktur Grid: Grid Layout memungkinkan kita untuk membuat struktur grid yang kompleks dengan menggunakan properti seperti grid-template-columns dan grid-template-rows.
+* Pengaturan Elemen: Grid Layout memungkinkan kita untuk mengatur elemen-elemen dalam grid dengan menggunakan properti seperti grid-column dan grid-row.
+* Responsif: Grid Layout dapat membuat struktur grid yang responsif terhadap perubahan ukuran layar.
+
 Contoh Implementasi:
 ```
 <div class="grid-container">
@@ -588,6 +596,43 @@ Contoh Implementasi:
 ```
 
 ## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
+### Implementasi fungsi untuk menghapus dan mengedit product
+* Buat fungsi delete_product pada views.py yang ada pada subdirektori main yang menerima parameter request dan id pada urls.py yang ada pada folder main import fungsi delete_product dan tambahkan path url
+  ```
+  path('delete/<uuid:id>', delete_product, name='delete_product'),
+  ```
+* pada file main.html kita menambahkan kode ini
+  ```
+  <td>
+        <a href="{% url 'main:edit_product' Product.pk %}">
+            <button>
+                Delete
+            </button>
+        </a>
+    </td>
+  ```
+* Selanjutnya buat fungsi edit_product pada views.py yang ada pada subdirektori main yang menerima parameter request dan id
+* Tambahkan import reverse dan HttpResponseRedirect pada views.py
+* Buat file HTML baru dengan nama `edit_product.html`
+* Setelah itu tambahkan juga fungsi  `edit_product` dan path url fungsi tersebut
+  ```
+  path('edit-product/<uuid:id>', edit_product, name='edit_product'),
+  ```
+* Lalu tambahkan potongan kode berikut di main.html
+  ```
+  ...
+<tr>
+    ...
+    <td>
+        <a href="{% url 'main:edit_product' Product.pk %}">
+            <button>
+                Edit
+            </button>
+        </a>
+    </td>
+</tr>
+...
+  ```
 ### Referensi
 * DEV. (2021). _Django Web Framework (Python)_. Diakses pada 10 September 2024, dari https://dev.to/ivanadokic/django-web-framework-python-ebn
 * Niagahoster. (2022). _Belajar Django, Framework Python yang Kian Populer_. Diakses pada 10 September 2024, dari [https://dev.to/ivanadokic/django-web-framework-python-ebn](https://www.niagahoster.co.id/blog/django-framework/)
