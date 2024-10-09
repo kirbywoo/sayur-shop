@@ -116,10 +116,10 @@ def delete_product(request, id):
 @require_POST
 def add_product_entry_ajax(request):
     name = strip_tags(request.POST.get("name"))
-    price = request.POST.get("price")
+    price = strip_tags(request.POST.get("price"))
     description = strip_tags(request.POST.get("description"))
-    stock = request.POST.get("stock")
-    rating = request.POST.get("rating",0.0)
+    stock = strip_tags(request.POST.get("stock"))
+    rating = request.POST.get("rating")
     user = request.user
 
     new_product = Product(
@@ -134,5 +134,6 @@ def add_product_entry_ajax(request):
         new_product.save()
         return HttpResponse(b"CREATED", status=201)
     else:
+        print(form.errors)
         errors = form.errors.as_json()
         return HttpResponse(errors, status=400, content_type="application/json")

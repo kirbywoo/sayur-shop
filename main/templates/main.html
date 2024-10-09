@@ -76,7 +76,7 @@
                 </div>
                 <div class="mb-4">
                   <label for="rating" class="block text-sm font-medium text-gray-700">Rating</label>
-                  <input type="number" id="stock" name="stock" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-green-700" placeholder="0.0" required>
+                  <input type="number" id="rating" name="rating" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-green-700" placeholder="0.0" required>
                 </div>
               </form>
             </div>
@@ -194,9 +194,9 @@
         document.getElementById("closeModalBtn").addEventListener("click", hideModal);
 
         function addProductEntry() {
-        fetch("{% url 'main:add_product_entry_ajax' %}", {
-          method: "POST",
-          body: new FormData(document.querySelector('#productEntryForm')),
+            fetch("{% url 'main:add_product_entry_ajax' %}", {
+              method: "POST",
+              body: new FormData(document.querySelector('#productEntryForm')),
         })
         .then(response => {
             if (response.ok) {
