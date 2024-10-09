@@ -641,6 +641,63 @@ Contoh Implementasi:
 * Ini merupakan tampilan web saya yang sudah di settings agar responsive
   ![image](https://github.com/user-attachments/assets/90cd9781-9dd2-4db8-ab90-68fa1df3a8b9)
 
+# Tugas 6
+## 1. Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!
+- **Menjadikan web kita interaktif.** JavaScript memungkinkan interaksi antarmuka pengguna yang dinamis dan responsif. Dengan JavaScript, kita dapat merespon tindakan pengguna, seperti mengklik tombol, mengisi *form*, memvalidasi input pengguna, menampilkan pesan peringatan, atau memicu tindakan lainnya berdasarkan interaksi pengguna.
+- **Manipulasi dan kontrol DOM**. JavaScript memungkinkan manipulasi elemen HTML dan struktur halaman menggunakan DOM (Document Object Model). Kita dapat membuat perubahan pada elemen HTML secara dinamis berdasarkan kondisi atau interaksi pengguna. Contohnya seperti, menambahkan, menghapus, atau memodifikasi elemen HTML.
+- **Validasi *form* pada *client-side.*** JavaScript memungkinkan validasi *form* pada *client-side* sebelum data dikirim ke server. Dengan menggunakan JavaScript, kita dapat memberikan umpan balik instan kepada pengguna tentang kesalahan input sebelum data dikirim..
+- **Meningkatkan visual website.** JavaScript juga berfungsi untuk membuat animasi, efek visual, dan perubahan tampilan halaman yang menarik. Dengan memanfaatkan bahasa pemrograman ini, kita dapat membuat animasi perpindahan elemen, perubahan warna, efek transparansi, dan masih banyak lagi.
+- **Memungkinkan Pemanggilan HTTP AJAX**. JavaScript memungkinkan pemanggilan asinkron ke server menggunakan teknik  AJAX (Asynchronous JavaScript and XML). Dengan AJAX, kita dapat mengambil dan mengirim data ke server tanpa harus memuat ulang seluruh halaman. Hal ini memungkinkan pengembangan aplikasi web yang responsif dan dapat memperbarui konten secara dinamis.
+
+## 2. Jelaskan fungsi dari penggunaan await ketika kita menggunakan fetch()! Apa yang akan terjadi jika kita tidak menggunakan await?
+Fungsi `await` ketika kita menggunakan `fetch()` berfungsi untuk memastikan JavaScript menunggu hasil dari operasi `async` sebelum melanjutkan eksekusi ke kode berikutnya. 
+
+Jika kita tidak menggunakan `await` pada `fetch()` maka `fetch()` akan langsung mengembalikan *promise* dan kode berikutnya akan dieksekusi sebelum permintaan fetch selesai. Ini bisa jadi menyebabkan kode kita gagal atau tidak berfungsi  seperti yang diharapkan karena kita akan mendapatkan respons promise, bukan dengan hasil respons yang aktual.
+
+## 3. Mengapa kita perlu menggunakan decorator csrf_exempt pada view yang akan digunakan untuk AJAX POST?
+Decorator csrf_exempt membuat Django tidak perlu mengecek keberadaan csrf_token pada POST request yang dikirimkan ke fungsi view tersebut. Secara default, Django mengharuskan setiap permintaan POST, PUT, PATCH, dan DELETE yang memodifikasi data dikirim bersama token CSRF. Tetapi, jika kita tidak menyertakan CSRF token dalam request AJAX, Django akan menolak permintaan tersebut dan mengembalikan error, karena mekanisme CSRF protection aktif secara default. maka dari itu kita menggunakan decorator @csrf_exempt pada view yang menangani request AJAX tersebut. 
+
+## 4. Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?
+Pembersihan (sanitasi) data input pengguna tidak boleh hanya dilakukan di frontend, tetapi juga sangat penting dilakukan di backend. Alasan utamanya adalah keamanan. Pengguna dapat memanipulasi atau menonaktifkan validasi di frontend melalui alat pengembang pada browser, sehingga memungkinkan mereka mengirimkan data yang berbahaya atau tidak valid ke server. Tanpa pembersihan di backend, aplikasi rentan terhadap serangan seperti SQL Injection atau Cross-Site Scripting (XSS), yang dapat membahayakan sistem. Backend memiliki kontrol penuh dan tidak bisa dimanipulasi oleh pengguna, sehingga validasi di backend memastikan data diproses dengan aman dan konsisten. Selain itu, backend sering menerima permintaan dari berbagai sumber selain frontend resmi, seperti aplikasi mobile atau API pihak ketiga, sehingga validasi di backend menjamin bahwa semua data yang masuk sesuai dengan harapan. Sementara validasi di frontend berguna untuk memperbaiki pengalaman pengguna dengan memberikan respons cepat atas kesalahan input, hal ini tidak bisa dijadikan satu-satunya lapisan perlindungan. Backend juga harus melindungi data yang disimpan di server dan database dari kemungkinan serangan atau data yang tidak sesuai. Oleh karena itu, validasi dan sanitasi di backend wajib dilakukan untuk menjaga keamanan, integritas, dan konsistensi data.
+
+## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+- Menambahkan import pada views.py
+  ```
+  from django.views.decorators.csrf import csrf_exempt
+  from django.views.decorators.http import require_POST
+  ```
+- Membuat fungsi add_product_entry_ajax pada views.py
+- Lalu tambahkan fungsi tersebut pada urls.py dengan mengimport dan menambahkan path pada urlpatterns
+- Untuk menampilkan data product entry dengan fetch() API kita menghapus kode ini:
+  ```
+  product_entries = Product.objects.filter(user=request.user)
+  'product_entries': product_entries,
+  ```
+- Ubah baris pertama pada fungsi `show_json` dan `show_xml` menjadi `data = Product.objects.filter(user=request.user)`
+- Pada file main.html hapus bagian _block conditional_ product_entries dan ubah menjadi
+  `<div id="product_entry_cards"></div>`
+- Buat block <script> di bagian bawah sebelum {% endblock content %}) dan membuat fungsi baru pada block <script> tersebut dengan nama getProductEntries dan refreshProductEntries
+- Implementasikan modal (Tailwind) pada aplikasi untuk membuat modal sebagai form untuk menambahkan mood.
+- Menambahkan tombol Add New Product Entry by ajax untuk melakukan penambahan data dengan AJAX
+- Membuat fungsi addProductEntry untuk menambahkan data berdasarkan input ke basis data secara AJAX
+- Menambahkan event listener pada form yang ada di modal untuk menjalankan fungsi addProductEntry
+- Untuk melindungi aplikasi dari ross Site Scripting (XSS), kita mengimpor `strip_tags` pada views.py dan forms.py
+- Lalu tambahkan juga fungsi `strip_tags` pada data product dan description
+  ```
+  name = strip_tags(request.POST.get("name"))
+  description = strip_tags(request.POST.get("description"))
+  ```
+- Menambahkan method clean_product dan clean_description pada forms.py
+- Bersihkan data dengan DOMPurify dengan menambahkan kode berikut pada block meta yang ada di main.html
+  ```
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
+  ```
+- Setelah itu menambahkan kode berikut pada refreshProductEntries
+  ```
+  const name = DOMPurify.sanitize(item.fields.name);
+  const description = DOMPurify.sanitize(item.fields.description);
+  ```
+
 ### Referensi
 * DEV. (2021). _Django Web Framework (Python)_. Diakses pada 10 September 2024, dari https://dev.to/ivanadokic/django-web-framework-python-ebn
 * Niagahoster. (2022). _Belajar Django, Framework Python yang Kian Populer_. Diakses pada 10 September 2024, dari [https://dev.to/ivanadokic/django-web-framework-python-ebn](https://www.niagahoster.co.id/blog/django-framework/)
